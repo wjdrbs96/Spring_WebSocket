@@ -1,13 +1,13 @@
-package com.example.springwebsocket;
+package com.socket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringWebSocketApplication {
+public class SocketApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringWebSocketApplication.class, args);
+        SpringApplication.run(SocketApplication.class, args);
     }
 
 }
