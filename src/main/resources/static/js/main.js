@@ -34,7 +34,6 @@ function connect(event) {
 
 function onConnected() {
     // Subscribe to the Public Topic
-    // Math.floor(Math.random() * 10)
     stompClient.subscribe('/topic/public/1', onMessageReceived);
 
     // Tell your username to the server

@@ -1,5 +1,6 @@
 package com.socket.controller;
 
+import com.socket.redis.RedisSubscriber;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,6 +17,7 @@ import java.util.List;
 public class RedisController {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisSubscriber redisSubscriber;
 
     @GetMapping("redis1")
     public List<Object> test() {

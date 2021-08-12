@@ -1,6 +1,8 @@
 package com.socket.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -9,9 +11,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 /**
  * created by jg 2021/07/16
  */
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSocketMessageBroker  // WebSocket 서버를 활성화하는 데 사용
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private final StompHandler stompHandler;
 
     // 한 클라이언트에서 다른 클라이언트로 메시지를 라우팅 하는 데 사용될 메시지 브로커를 구성
     @Override
@@ -26,6 +31,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // 최초 소켓을 연결하는 경우, endpoint가 되는 url
         registry.addEndpoint("/ws").withSockJS();
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(stompHandler);
     }
 
 }

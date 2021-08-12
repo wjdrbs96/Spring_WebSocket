@@ -31,42 +31,41 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage/{idx}")
     @SendTo("/topic/public/{idx}")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage, @DestinationVariable String idx) {
-        // Key: chatNumber1, Value: value
-        redisTemplate.opsForValue().set("chatting1", chatMessage.getContent());
-        System.out.println(redisTemplate.opsForValue().get("chatting1"));
+//        // Key: chatNumber1, Value: value
+//        redisTemplate.opsForValue().set("chatting1", chatMessage.getContent());
+//        System.out.println(redisTemplate.opsForValue().get("chatting1"));
 
         // Key: chatNumber1, Value: 채팅 List
-        ListOperations<String, Object> listOperations = redisTemplate.opsForList();
         redisTemplate.opsForList().rightPush("chatNumber" + idx, chatMessage);
         RedisOperations<String, Object> operations = redisTemplate.opsForList().getOperations();
         System.out.println(operations.opsForList().range("chatNumber" + idx, 0, -1));
 
-        // Key: chatNumber1, Value: 채팅 Set
-        SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
-        setOperations.add("Key", chatMessage);
-        System.out.println(setOperations.members("Key"));
-
-        // Key chatNumber1, Value: 채팅 SortedSet
-        ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
-        zSetOperations.add("ZKey", chatMessage, 10);
-        zSetOperations.add("ZKey", chatMessage, 5);
-        zSetOperations.add("ZKey", chatMessage, 7);
-        System.out.println(zSetOperations.range("ZKey", 0, -1));
-
-         // Key: chatNumber1, Value: 채팅 Map
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        Map<String, Object> map = new HashMap<>();
-        map.put("firstName", "Gyunny");
-        map.put("lastName", "Choi");
-        map.put("gender", "Man");
-        hashOperations.putAll("key", map);
-
-        String firstName = (String) redisTemplate.opsForHash().get("key", "firstName");
-        String lastName = (String) redisTemplate.opsForHash().get("key", "lastName");
-        String gender = (String) redisTemplate.opsForHash().get("key", "gender");
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(gender);
+//        // Key: chatNumber1, Value: 채팅 Set
+//        SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
+//        setOperations.add("Key", chatMessage);
+//        System.out.println(setOperations.members("Key"));
+//
+//        // Key chatNumber1, Value: 채팅 SortedSet
+//        ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
+//        zSetOperations.add("ZKey", chatMessage, 10);
+//        zSetOperations.add("ZKey", chatMessage, 5);
+//        zSetOperations.add("ZKey", chatMessage, 7);
+//        System.out.println(zSetOperations.range("ZKey", 0, -1));
+//
+//         // Key: chatNumber1, Value: 채팅 Map
+//        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("firstName", "Gyunny");
+//        map.put("lastName", "Choi");
+//        map.put("gender", "Man");
+//        hashOperations.putAll("key", map);
+//
+//        String firstName = (String) redisTemplate.opsForHash().get("key", "firstName");
+//        String lastName = (String) redisTemplate.opsForHash().get("key", "lastName");
+//        String gender = (String) redisTemplate.opsForHash().get("key", "gender");
+//        System.out.println(firstName);
+//        System.out.println(lastName);
+//        System.out.println(gender);
 
         return chatMessage;
     }

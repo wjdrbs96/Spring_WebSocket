@@ -45,6 +45,7 @@ public class RedisConfig {
         container.addMessageListener(messageListenerAdapter(), topic());
         return container;
     }
+
     @Bean
     public ChannelTopic topic() {
         return new ChannelTopic("Gyunny");
